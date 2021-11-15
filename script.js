@@ -224,7 +224,18 @@ const handleRender = () => {
     </div>
       </div>
       <div class="follow-btn-section mt-3">
-      <button class="btn btn-primary w-100">Follow</button>
+
+      <div class="form-group">
+      <label for="">Next Followup</label>
+      <input
+        type="date"
+        class="form-control"
+        name=""
+        id=""
+        aria-describedby="helpId"
+        placeholder=""
+      />
+    </div>
       </div>
   </div>
   </div>`;
