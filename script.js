@@ -58,14 +58,53 @@ const fetchedData = () => {
 // dragging
 let draggableCard = null;
 
-function dragStart() {
-  draggableCard = this;
+function dragStart(e, element) {
+  draggableCard = element;
   console.log("dragStart");
 }
 
 function dragEnd() {
   draggableCard = null;
   console.log("dragEnd");
+}
+function dragOver(e) {
+  e.preventDefault();
+  console.log("dragOver");
+}
+
+function dragEnter(e) {
+  e.preventDefault();
+}
+
+function dragLeave(e) {
+  console.log("dragLeave");
+  e.preventDefault();
+}
+
+function dragDrop(e, element) {
+  e.preventDefault();
+  console.log(e, "here");
+  console.log(element);
+
+  element.append(draggableCard);
+
+  // place the elemnt
+  const id = draggableCard.id.split("-")[1];
+  const key = draggableCard.id.split("-")[0].split("_").join(" ");
+  // find the object with the id and change the status
+  const oldObj = obj[key].find((value) => value.id === id);
+  console.log(oldObj);
+
+  //   const index = obj[key].findIndex((value) => value.id === id);
+  const newKey = element.children[0].innerText;
+  oldObj.status = newKey;
+  console.log(oldObj);
+  obj[newKey].push(oldObj);
+
+  // remove the old object
+  const index = obj[key].findIndex((value) => value.id === id);
+  obj[key].splice(index, 1);
+  handleRender();
 }
 
 const handleTogglePariority = (id, key) => {
@@ -109,10 +148,14 @@ const handleRender = () => {
   let html = "";
 
   Object.keys(obj).forEach((key) => {
-    html += `<div class="column">
+    html += `<div class="column" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondragenter="dragEnter(event)" ondrop="dragDrop(event,this)">
     <h1 class="board-name text-center">${key}</h1>`;
     obj[key].forEach((value, index) => {
-      html += `<div class="board-card" draggable="true">
+      html += `<div class="board-card" id="${value.status
+        .split(" ")
+        .join("_")}-${
+        value.id
+      }" draggable="true" ondragstart="dragStart(event,this)" ondragend=dragEnd()>
         <div class="top-info">
             <h4 class="user-name">${value.first_name}</h4>
             <h4 class="user-job">${value.job}</h4>
