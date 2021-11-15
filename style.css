@@ -83,3 +83,86 @@
 .active {
   color: #d3455b;
 }
+
+.notes-section {
+  position: relative;
+}
+
+.add-new-notes-container {
+  background-color: white;
+  width: 300px;
+  position: absolute;
+  top: -2rem;
+  left: 4rem;
+  padding: 10px;
+  display: none;
+  z-index: 10;
+}
+
+.add-new-notes-container::before {
+  color: white;
+  border-right: 13px solid;
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  display: inline-block;
+  content: "";
+  position: absolute;
+  left: -13px;
+}
+
+.add-new-notes-btn {
+  width: 280px;
+}
+
+.individual-note {
+  border-bottom: 2px solid #d5d5d5;
+  padding: 10px;
+}
+
+.note-close {
+  font-size: 1.3rem;
+  float: right;
+  clear: both;
+  cursor: pointer;
+}
+
+.delete-menu-icon {
+  font-size: 1.3rem;
+  float: right;
+  cursor: pointer;
+  position: absolute;
+  top: -1rem;
+  right: 0;
+}
+
+.actions {
+  display: flex;
+}
+.menu {
+  position: relative;
+  margin-left: auto;
+}
+
+.menu-container {
+  position: absolute;
+  top: -1rem;
+  width: 100px;
+  background-color: white;
+  right: 0;
+  display: none;
+  z-index: 10;
+}
+
+.menu-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.menu-icon {
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #949494;
+  color: white;
+}

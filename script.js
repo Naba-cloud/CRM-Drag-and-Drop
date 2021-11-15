@@ -10,6 +10,22 @@ const handleAddNewProperty = (property) => {
   handleRender();
 };
 
+const handleAddNewNote = (id, key) => {
+  const note = document.getElementById(`text-${key}-${obj[key][id].id}`).value;
+  console.log(id);
+  obj[key][id].notes.unshift(note);
+  handleRender();
+};
+
+const handleDeleteProperty = (id, key) => {
+  console.log(id, key);
+
+  const index = obj[key].findIndex((value) => value.id === id);
+  obj[key].splice(index, 1);
+
+  handleRender();
+};
+
 const fetchedData = () => {
   fetch(
     "https://erp.manaknightdigital.com/v1/api/sale/customer/list/0?per_page_sort=1000"
@@ -29,7 +45,7 @@ const fetchedData = () => {
           job: value.job ? value.job : "No Job",
           lastUpdated: value.contact_date,
           status: value.status,
-          notes: value.notes ? value.notes : [],
+          notes: value.notes !== undefined ? value.notes : [],
         });
       });
     });
@@ -39,11 +55,52 @@ const fetchedData = () => {
   fetchedData();
 })();
 
+// dragging
+let draggableCard = null;
+
+function dragStart() {
+  draggableCard = this;
+  console.log("dragStart");
+}
+
+function dragEnd() {
+  draggableCard = null;
+  console.log("dragEnd");
+}
+
 const handleTogglePariority = (id, key) => {
   console.log(key);
   document.getElementById(id).classList.toggle("active");
   const index = obj[key].findIndex((value) => value.id === id.split("-")[1]);
   obj[key][index].status = obj[key][index].status === "low" ? "high" : "low";
+};
+
+const handleShowNotes = (id) => {
+  handleHideNotes();
+  handleHideMenu();
+
+  const notes = document.getElementById(`note-${id}`);
+  notes.style.display = "block";
+};
+
+const handleHideNotes = () => {
+  document.querySelectorAll(".add-new-notes-container").forEach((value) => {
+    value.style.display = "none";
+  });
+};
+
+const handleShowMenu = (id, key) => {
+  handleHideNotes();
+
+  handleHideMenu();
+  const menu = document.getElementById(`menu-${key}-${id}`);
+  menu.style.display = "block";
+};
+
+const handleHideMenu = () => {
+  document.querySelectorAll(".menu-container").forEach((value) => {
+    value.style.display = "none";
+  });
 };
 
 const handleRender = () => {
@@ -55,30 +112,81 @@ const handleRender = () => {
     html += `<div class="column">
     <h1 class="board-name text-center">${key}</h1>`;
     obj[key].forEach((value, index) => {
-      html += `<div class="board-card">
+      html += `<div class="board-card" draggable="true">
         <div class="top-info">
             <h4 class="user-name">${value.first_name}</h4>
             <h4 class="user-job">${value.job}</h4>
             <h4 class="user-updated">Updated: ${value.lastUpdated}</h4>
-            <p class="note">${value.notes}</p>
+            <p class="note">${value.notes.slice(0, 1)}</p>
             <div class="actions">
+      
             <i
                 class="fa fa-fire fire-icon active"
                 id="card-${value.id}"
                 aria-hidden="true"
-                onclick="handleTogglePariority('card-${value.id}', '${value.status}')"
+                onclick="handleTogglePariority('card-${value.id}', '${
+        value.status
+      }')"
             ></i>
-            <i class="fas fa-sticky-note note-icon mx-2"></i>
-            </div>
-            <div class="follow-btn-section mt-3">
-            <button class="btn btn-primary w-100">Follow</button>
-            </div>
+            <i class="fas fa-sticky-note note-icon mx-2" onclick="handleShowNotes('${
+              value.id
+            }')"></i>
+            <div class="notes-section">
+            <div class="add-new-notes-container shadow" id="note-${value.id}" >
+              <div class="add-notes-box">
+                <div class="form-group">
+                <i class="far fa-times-circle note-close" onclick="handleHideNotes()"></i>
+                  <label for="">Enter Notes</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name=""
+                    id="text-${value.status}-${value.id}"
+                    aria-describedby="helpId"
+                    placeholder=""
+                  />
+                </div>
+                <button
+                  class="add-new-notes-btn btn btn-primary btn-block"
+                  onclick="handleAddNewNote('${index}', '${value.status}')"
+                >
+                  Add
+                </button>
+              </div>
+              
+              <div class="previous-notes">
+              `;
+      obj[key][index].notes.forEach((value) => {
+        html += `<p class="individual-note">
+                  ${value}
+                    </p>`;
+      });
+      html += `</div>
+     
+    
+
+    </div>
+   
+      </div>
+      <div class="menu" >
+      <i class="fas fa-ellipsis-v menu-icon" onclick="handleShowMenu('${value.id}','${value.status}')"></i>
+      <div class="menu-container shadow" id="menu-${value.status}-${value.id}">
+        <div class="menu-item d-flex align-items-center">
+          <p class="m-0">Edit</p>
         </div>
-        </div>`;
+        <div class="menu-item" onclick="handleDeleteProperty('${value.id}','${value.status}')">
+          <p class="m-0">Delete</p>
+        </div>
+      </div>
+    </div>
+      </div>
+      <div class="follow-btn-section mt-3">
+      <button class="btn btn-primary w-100">Follow</button>
+      </div>
+  </div>
+  </div>`;
     });
     html += `</div>`;
   });
   render.innerHTML = html;
 };
-
-handleRender();
