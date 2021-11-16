@@ -63,11 +63,6 @@
   font-size: 16px;
 }
 
-#fire-icon {
-  font-size: 1.3rem;
-  padding: 10px;
-}
-
 .user-name,
 .user-job,
 .user-updated {
@@ -80,8 +75,12 @@
   cursor: pointer;
 }
 
+.fire-icon {
+  color: grey;
+}
+
 .active {
-  color: #d3455b;
+  color: red;
 }
 
 .notes-section {

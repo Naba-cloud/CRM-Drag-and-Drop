@@ -164,7 +164,7 @@ const handleRender = () => {
             <div class="actions">
       
             <i
-                class="fa fa-fire fire-icon active"
+                class="fa fa-fire fire-icon"
                 id="card-${value.id}"
                 aria-hidden="true"
                 onclick="handleTogglePariority('card-${value.id}', '${
@@ -243,4 +243,10 @@ const handleRender = () => {
     html += `</div>`;
   });
   render.innerHTML = html;
+};
+
+window.onclick = (event) => {
+  if (!event.target.matches(".menu-icon")) {
+    handleHideMenu();
+  }
 };
