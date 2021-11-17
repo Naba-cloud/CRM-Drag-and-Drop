@@ -1,7 +1,6 @@
 const obj = {};
 
 const handleAddNewColumn = (colName) => {
-  console.log(colName);
   obj[colName] = [];
   handleRender();
 };
@@ -97,10 +96,11 @@ function dragDrop(e, element) {
   console.log(oldObj);
 
   //   const index = obj[key].findIndex((value) => value.id === id);
-  const newKey = element.children[0].innerText;
+  const newKey = element.id.split("-")[0].split("_").join(" ");
+
   oldObj.status = newKey;
-  console.log(oldObj);
-  obj[newKey].push(oldObj);
+  obj[newKey].unshift(oldObj);
+  console.log(obj);
 
   // remove the old object
   const index = obj[key].findIndex((value) => value.id === id);
@@ -148,8 +148,12 @@ const handleRender = () => {
   render.innerHTML = "";
   let html = "";
 
-  Object.keys(obj).forEach((key) => {
-    html += `<div class="main-col"><h1 class="board-name text-center">${key}</h1><div class="column" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondragenter="dragEnter(event)" ondrop="dragDrop(event,this)">
+  Object.keys(obj).forEach((key, index) => {
+    html += `<div class="main-col"><h1 class="board-name text-center">${key}</h1><div class="column" id="${key
+      .split(" ")
+      .join(
+        "_"
+      )}-${index}" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondragenter="dragEnter(event)" ondrop="dragDrop(event,this)">
     `;
     obj[key].forEach((value, index) => {
       if (value.notes.length <= 0) {
