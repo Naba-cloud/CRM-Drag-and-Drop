@@ -138,6 +138,9 @@ html {
   right: 0;
 }
 
+.note {
+  font-size: 14px;
+}
 .actions {
   display: flex;
   align-items: center;
@@ -170,4 +173,10 @@ html {
 .menu-item:hover {
   background-color: #949494;
   color: white;
+}
+
+.edit-board-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
 }

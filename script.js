@@ -1,4 +1,4 @@
-const obj = {};
+let obj = {};
 
 const handleAddNewColumn = (colName) => {
   obj[colName] = [];
@@ -23,6 +23,20 @@ const handleDeleteProperty = (id, key) => {
   obj[key].splice(index, 1);
 
   handleRender();
+};
+
+const handleBoardNameWithPropertyStatus = (oldName) => {
+  console.log(oldName);
+  const newName = prompt("Enter new board name");
+  if (newName.length > 0) {
+    obj[newName] = obj[oldName];
+    delete obj[oldName];
+    // also update the status
+    obj[newName].forEach((value) => {
+      value.status = newName;
+    });
+    handleRender();
+  }
 };
 
 const fetchedData = () => {
@@ -59,16 +73,13 @@ let draggableCard = null;
 
 function dragStart(e, element) {
   draggableCard = element;
-  console.log("dragStart");
 }
 
 function dragEnd() {
   draggableCard = null;
-  console.log("dragEnd");
 }
 function dragOver(e) {
   e.preventDefault();
-  console.log("dragOver");
 }
 
 function dragEnter(e) {
@@ -82,8 +93,6 @@ function dragLeave(e) {
 
 function dragDrop(e, element) {
   e.preventDefault();
-  console.log(e, "here");
-  console.log(element.firstChild);
 
   // prepend the item after the board name heading
   element.prepend(draggableCard);
@@ -93,14 +102,12 @@ function dragDrop(e, element) {
   const key = draggableCard.id.split("-")[0].split("_").join(" ");
   // find the object with the id and change the status
   const oldObj = obj[key].find((value) => value.id === id);
-  console.log(oldObj);
 
   //   const index = obj[key].findIndex((value) => value.id === id);
   const newKey = element.id.split("-")[0].split("_").join(" ");
 
   oldObj.status = newKey;
   obj[newKey].unshift(oldObj);
-  console.log(obj);
 
   // remove the old object
   const index = obj[key].findIndex((value) => value.id === id);
@@ -149,7 +156,7 @@ const handleRender = () => {
   let html = "";
 
   Object.keys(obj).forEach((key, index) => {
-    html += `<div class="main-col"><h1 class="board-name text-center">${key}</h1><div class="column" id="${key
+    html += `<div class="main-col"><h1 class="board-name text-center">${key} <i class="fas fa-edit edit-board-icon" onclick="handleBoardNameWithPropertyStatus('${key}')"></i></h1><div class="column" id="${key
       .split(" ")
       .join(
         "_"
@@ -260,3 +267,20 @@ window.onclick = (event) => {
     handleHideMenu();
   }
 };
+
+const handleAddNewBoard = () => {
+  const boardName = document.getElementById("new-board-name").value;
+  // handleAddNewColumn(boardName);
+  document.getElementById("new-board-name").value = "";
+
+  // add new column at the start
+  obj = {
+    [boardName]: [],
+    ...obj,
+  };
+  handleRender();
+};
+
+document
+  .querySelector("#add-new-board-btn")
+  .addEventListener("click", handleAddNewBoard);

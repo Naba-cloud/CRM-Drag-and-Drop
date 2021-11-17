@@ -26,102 +26,28 @@
   <body>
     <div class="container-fluid p-0">
       <h1 class="text-center my-3">Leads</h1>
-      <div class="leads-container d-flex" id="render">
-        <div class="column">
-          <h1 class="board-name text-center">Board Name</h1>
-          <div class="board-card">
-            <div class="top-info">
-              <h4 class="user-name">Fahad Aleem</h4>
-              <h4 class="user-job">Printing Press</h4>
-              <h4 class="user-updated">Updated: 16/20/2021</h4>
-              <p class="note">lorem ipsum here I am here.</p>
-              <div
-                class="
-                  actions
-                  d-flex
-                  align-items-center
-                  justify-content-between
-                "
-              >
-                <div class="d-flex">
-                  <i
-                    class="fa fa-fire fire-icon active"
-                    id="card-1"
-                    aria-hidden="true"
-                  ></i>
-                  <div class="notes-section">
-                    <i class="fas fa-sticky-note note-icon mx-2"></i>
-                    <div class="add-new-notes-container shadow" id="note-1">
-                      <div class="add-notes-box">
-                        <div class="form-group">
-                          <label for="">Enter Notes</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            name=""
-                            id=""
-                            aria-describedby="helpId"
-                            placeholder=""
-                          />
-                        </div>
-                        <button
-                          class="add-new-notes-btn btn btn-primary btn-block"
-                        >
-                          Add
-                        </button>
-                      </div>
-                      <div class="previous-notes">
-                        <p class="individual-note">
-                          Lorem ipsum dolor sit amet consectetur, adipisicing
-                          elit. Eius amet exercitationem consectetur dolor
-                          commodi voluptatibus ratione doloribus nulla illum
-                          perferendis dolorem fuga, iusto fugiat eaque dolorum
-                          aperiam. Nostrum, obcaecati minima!
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="menu">
-                  <i class="fas fa-ellipsis-v"></i>
-                  <div class="menu-container shadow">
-                    <div class="menu-item d-flex align-items-center">
-                      <p class="m-0">Edit</p>
-                    </div>
-                    <div class="menu-item">
-                      <p class="m-0">Delete</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="follow-btn-section mt-1">
-                <button class="btn btn-primary w-100">Follow</button>
-                <div class="form-group">
-                  <label for=""></label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    name=""
-                    id=""
-                    aria-describedby="helpId"
-                    placeholder=""
-                  />
-                  <small id="helpId" class="form-text text-muted"
-                    >Help text</small
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="add-new-board w-25 my-3 mx-2">
+        <div class="form-group">
+          <label for="">Enter new board</label>
+          <input
+            type="text"
+            class="form-control"
+            name=""
+            id="new-board-name"
+            aria-describedby="helpId"
+            placeholder="Type board name"
+          />
         </div>
-
-        <div class="add-new-leads">
-          <button type="button" class="btn btn-primary" id="add-new-card-btn">
-            Add New Board
-          </button>
-        </div>
+        <button
+          type="button"
+          name=""
+          id="add-new-board-btn"
+          class="btn btn-primary btn-lg btn-block"
+        >
+          Add new board
+        </button>
       </div>
+      <div class="leads-container d-flex" id="render"></div>
     </div>
     <script src="./script.js"></script>
   </body>
