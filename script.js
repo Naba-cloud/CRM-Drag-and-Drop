@@ -84,9 +84,10 @@ function dragLeave(e) {
 function dragDrop(e, element) {
   e.preventDefault();
   console.log(e, "here");
-  console.log(element);
+  console.log(element.firstChild);
 
-  element.append(draggableCard);
+  // prepend the item after the board name heading
+  element.prepend(draggableCard);
 
   // place the elemnt
   const id = draggableCard.id.split("-")[1];
@@ -148,8 +149,8 @@ const handleRender = () => {
   let html = "";
 
   Object.keys(obj).forEach((key) => {
-    html += `<div class="column" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondragenter="dragEnter(event)" ondrop="dragDrop(event,this)">
-    <h1 class="board-name text-center">${key}</h1>`;
+    html += `<div class="main-col"><h1 class="board-name text-center">${key}</h1><div class="column" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondragenter="dragEnter(event)" ondrop="dragDrop(event,this)">
+    `;
     obj[key].forEach((value, index) => {
       if (value.notes.length <= 0) {
         note = "No Notes";
@@ -245,7 +246,7 @@ const handleRender = () => {
   </div>
   </div>`;
     });
-    html += `</div>`;
+    html += `</div></div>`;
   });
   render.innerHTML = html;
 };

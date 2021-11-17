@@ -4,15 +4,23 @@
   box-sizing: border-box;
   font-family: Inter, sans-serif;
 }
+body,
+html {
+  height: 100%;
+}
 
 .column {
-  background-color: #f3f3f3;
-  /* height: 100vh; */
+  height: 100%;
   max-width: 200px;
+  /* min-height: 200px; */
+}
+
+.main-col {
+  background-color: #f3f3f3;
   border-left: 1px solid #ccc;
 }
 
-.column .board-name {
+.board-name {
   font-size: 14px;
   background-color: #d5d5d5;
   padding: 10px;
@@ -23,7 +31,7 @@
   text-align: center;
   display: inline-block;
   z-index: 100;
-  border: 1px solid #ccc;
+  border-left: 1px solid #ccc;
 }
 
 #add-new-card-btn {
@@ -152,6 +160,7 @@
 .menu-item {
   padding: 10px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .menu-icon {
