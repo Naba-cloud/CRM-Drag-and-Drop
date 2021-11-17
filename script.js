@@ -151,6 +151,11 @@ const handleRender = () => {
     html += `<div class="column" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondragenter="dragEnter(event)" ondrop="dragDrop(event,this)">
     <h1 class="board-name text-center">${key}</h1>`;
     obj[key].forEach((value, index) => {
+      if (value.notes.length <= 0) {
+        note = "No Notes";
+      } else {
+        note = value.notes[0];
+      }
       html += `<div class="board-card" id="${value.status
         .split(" ")
         .join("_")}-${
@@ -160,7 +165,7 @@ const handleRender = () => {
             <h4 class="user-name">${value.first_name}</h4>
             <h4 class="user-job">${value.job}</h4>
             <h4 class="user-updated">Updated: ${value.lastUpdated}</h4>
-            <p class="note">${value.notes.slice(0, 1)}</p>
+            <p class="note">${note}</p>
             <div class="actions">
       
             <i
@@ -223,10 +228,10 @@ const handleRender = () => {
       </div>
     </div>
       </div>
-      <div class="follow-btn-section mt-3">
+      <div class="follow-btn-section mt-1">
 
       <div class="form-group">
-      <label for="">Next Followup</label>
+      <label for="" class="next-follow-up">Next Followup</label>
       <input
         type="date"
         class="form-control"
